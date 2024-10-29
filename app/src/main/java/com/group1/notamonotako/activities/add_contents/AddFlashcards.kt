@@ -1,27 +1,24 @@
-package com.group1.notamonotako.views
+package com.group1.notamonotako.activities.add_contents
 
 import ApiService
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.viewpager2.widget.ViewPager2
 import com.group1.notamonotako.R
 import com.group1.notamonotako.api.AccountManager
 import com.group1.notamonotako.api.SoundManager
 import com.group1.notamonotako.api.requests_responses.flashcards.PostFlashcards
+import com.group1.notamonotako.activities.main_activity.HomeActivity
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 

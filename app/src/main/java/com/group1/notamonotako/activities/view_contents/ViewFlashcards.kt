@@ -1,4 +1,4 @@
-    package com.group1.notamonotako.views
+    package com.group1.notamonotako.activities.view_contents
     
     import ApiService
     import TokenManager
@@ -8,18 +8,17 @@
     import android.util.Log
     import android.view.GestureDetector
     import android.view.MotionEvent
-    import android.widget.Button
     import android.widget.EditText
     import android.widget.ImageButton
     import android.widget.TextView
     import android.widget.Toast
     import androidx.appcompat.app.AppCompatActivity
     import androidx.lifecycle.lifecycleScope
-    import androidx.viewpager2.widget.ViewPager2
     import com.group1.notamonotako.R
     import com.group1.notamonotako.api.AccountManager
     import com.group1.notamonotako.api.SoundManager
     import com.group1.notamonotako.api.requests_responses.flashcards.UpdateFlashcards
+    import com.group1.notamonotako.activities.main_activity.HomeActivity
     import kotlinx.coroutines.Dispatchers
     import kotlinx.coroutines.launch
     import kotlinx.coroutines.withContext

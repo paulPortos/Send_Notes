@@ -1,4 +1,4 @@
-package com.group1.notamonotako.views
+package com.group1.notamonotako.activities.extra_activities
 
 import ApiService
 import TokenManager
@@ -20,7 +20,6 @@ import com.group1.notamonotako.adapter.CommentsAdapter
 import com.group1.notamonotako.api.AccountManager
 import com.group1.notamonotako.api.SoundManager
 import com.group1.notamonotako.api.requests_responses.comments.CommentPostRequest
-import com.group1.notamonotako.api.requests_responses.comments.getComments
 import kotlinx.coroutines.launch
 
 class CommentActivity : AppCompatActivity() {

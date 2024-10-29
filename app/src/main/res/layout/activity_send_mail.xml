@@ -7,7 +7,7 @@
     android:background="@color/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.SendNotesActivity">
+    tools:context=".activities.extra_activities.SendNotesActivity">
 
   <FrameLayout
       android:layout_width="match_parent"

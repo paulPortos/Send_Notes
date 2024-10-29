@@ -20,11 +20,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.group1.notamonotako.R
 import com.group1.notamonotako.adapter.MyFlashcardsAdapter
 import com.group1.notamonotako.api.SoundManager
-import com.group1.notamonotako.api.requests_responses.flashcards.GetFlashcards
-import com.group1.notamonotako.views.GradientText
-import com.group1.notamonotako.views.NotificationActivity
-import com.group1.notamonotako.views.SettingsActivity
-import com.group1.notamonotako.views.ViewFlashcards
+import com.group1.notamonotako.activities.GradientText
+import com.group1.notamonotako.activities.extra_activities.NotificationActivity
+import com.group1.notamonotako.activities.extra_activities.SettingsActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

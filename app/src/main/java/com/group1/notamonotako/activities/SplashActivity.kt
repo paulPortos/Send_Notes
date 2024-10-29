@@ -1,19 +1,15 @@
-package com.group1.notamonotako.views
+package com.group1.notamonotako.activities
 
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.net.Uri
-import android.net.Uri.parse
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.MediaController
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import com.group1.notamonotako.R
-import java.net.URI
+import com.group1.notamonotako.activities.auth_activity.SignInActivity
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var videoView: VideoView

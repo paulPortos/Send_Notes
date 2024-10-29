@@ -10,8 +10,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.SearchView
@@ -19,22 +17,17 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.group1.notamonotako.R
-import com.group1.notamonotako.views.SettingsActivity
+import com.group1.notamonotako.activities.extra_activities.SettingsActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.group1.notamonotako.adapter.HomeAdapter
 import com.group1.notamonotako.api.SoundManager
 import com.group1.notamonotako.api.requests_responses.public_notes.getPublicNotes
-import com.group1.notamonotako.views.AddFlashcards
-import com.group1.notamonotako.views.AddNotes
-import com.group1.notamonotako.views.GradientText
-import com.group1.notamonotako.views.NotificationActivity
-import com.group1.notamonotako.views.SendNotesActivity
+import com.group1.notamonotako.activities.GradientText
+import com.group1.notamonotako.activities.extra_activities.NotificationActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
@@ -89,7 +82,7 @@ class Home : Fragment() {
 
 
         btnSettings.setOnClickListener {
-            val intent = Intent(requireContext(),SettingsActivity::class.java)
+            val intent = Intent(requireContext(), SettingsActivity::class.java)
             startActivity(intent)
             soundManager.playSoundEffect()
 

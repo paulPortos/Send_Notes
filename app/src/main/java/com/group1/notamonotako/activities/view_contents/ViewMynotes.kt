@@ -1,4 +1,4 @@
-package com.group1.notamonotako.views
+package com.group1.notamonotako.activities.view_contents
 
 import ApiService
 import android.content.Intent
@@ -27,6 +27,7 @@ import com.group1.notamonotako.api.requests_responses.notes.UpdateNotes
 import com.group1.notamonotako.api.requests_responses.notes.UpdateToPublicNotes
 import com.group1.notamonotako.api.requests_responses.notification.PostPendingNotification
 import com.group1.notamonotako.api.requests_responses.sendNotes.SendNotesRequest
+import com.group1.notamonotako.activities.main_activity.HomeActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

@@ -1,4 +1,4 @@
-package com.group1.notamonotako.views
+package com.group1.notamonotako.activities.extra_activities
 
 import ApiService
 import RetrofitInstance
@@ -9,7 +9,6 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
@@ -19,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import com.group1.notamonotako.R
 import com.group1.notamonotako.api.SoundManager
 import com.group1.notamonotako.api.requests_responses.ChangePass.ChangePasswordRequest
+import com.group1.notamonotako.activities.auth_activity.SignInActivity
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback

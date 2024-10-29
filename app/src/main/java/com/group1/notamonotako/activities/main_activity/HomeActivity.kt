@@ -1,4 +1,4 @@
-package com.group1.notamonotako.views
+package com.group1.notamonotako.activities.main_activity
 
 import TokenManager
 import android.content.Intent
@@ -21,6 +21,9 @@ import com.group1.notamonotako.databinding.ActivityHomeBinding
 import com.group1.notamonotako.fragments.Home
 import com.group1.notamonotako.fragments.MyFlashcards
 import com.group1.notamonotako.fragments.MyNotes
+import com.group1.notamonotako.activities.add_contents.AddFlashcards
+import com.group1.notamonotako.activities.add_contents.AddNotes
+import com.group1.notamonotako.activities.auth_activity.SignInActivity
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar

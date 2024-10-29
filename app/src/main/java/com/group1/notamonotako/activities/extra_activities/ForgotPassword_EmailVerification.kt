@@ -1,4 +1,4 @@
-package com.group1.notamonotako.views
+package com.group1.notamonotako.activities.extra_activities
 
 import ApiService
 import android.content.Intent
@@ -19,6 +19,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.group1.notamonotako.R
 import com.group1.notamonotako.api.ResetOtp
 import com.group1.notamonotako.api.requests_responses.forgetPassword.forgot_Password
+import com.group1.notamonotako.activities.auth_activity.SignInActivity
 import kotlinx.coroutines.launch
 import java.io.IOException
 

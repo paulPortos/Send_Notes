@@ -1,15 +1,13 @@
-package com.group1.notamonotako.views
+package com.group1.notamonotako.activities.auth_activity
 
 import ApiService
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -18,7 +16,8 @@ import androidx.lifecycle.lifecycleScope
 import com.group1.notamonotako.R
 import com.group1.notamonotako.api.AccountManager
 import com.group1.notamonotako.api.requests_responses.signin.Login
-import com.group1.notamonotako.api.requests_responses.signin.User
+import com.group1.notamonotako.activities.extra_activities.ForgotPassword_EmailVerification
+import com.group1.notamonotako.activities.main_activity.HomeActivity
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException

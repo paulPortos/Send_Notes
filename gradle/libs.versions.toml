@@ -10,6 +10,7 @@ material = "1.12.0"
 activity = "1.9.1"
 constraintlayout = "2.1.4"
 swiperefreshlayout = "1.1.0"
+kotlinkapt = "1.9.22"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -25,4 +26,5 @@ androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "s
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-kapt = {id = "kotlin-kapt", version.ref = "kotlinkapt"}
 

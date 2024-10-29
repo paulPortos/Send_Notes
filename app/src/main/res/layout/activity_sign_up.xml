@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:fitsSystemWindows="true"
-    tools:context=".views.SignUpActivity">
+    tools:context=".activities.auth_activity.SignUpActivity">
 
 
     <TextView

@@ -1,4 +1,4 @@
-package com.group1.notamonotako.views
+package com.group1.notamonotako.activities.view_contents
 
 import ApiService
 import android.content.Intent
@@ -7,16 +7,13 @@ import android.util.Log
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.group1.notamonotako.R
 import com.group1.notamonotako.api.SoundManager
 import com.group1.notamonotako.api.requests_responses.notes.PostnotesRequest
+import com.group1.notamonotako.activities.main_activity.HomeActivity
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 

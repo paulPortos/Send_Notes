@@ -6,7 +6,7 @@
     android:background="@color/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.ViewSendNotes">
+    tools:context=".activities.view_contents.ViewSendNotes">
 
     <FrameLayout
         android:id="@+id/flDelete"

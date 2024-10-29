@@ -1,20 +1,17 @@
 package com.group1.notamonotako.adapter
 
-import TokenManager
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.group1.notamonotako.R
 import com.group1.notamonotako.api.SoundManager
 import com.group1.notamonotako.api.requests_responses.notes.Note
-import com.group1.notamonotako.views.ViewMynotes
+import com.group1.notamonotako.activities.view_contents.ViewMynotes
 
 class MyNotesAdapter(val context: Context, val notelist: List<Note>) : RecyclerView.Adapter<MyNotesAdapter.NotesViewHolder>() {
 

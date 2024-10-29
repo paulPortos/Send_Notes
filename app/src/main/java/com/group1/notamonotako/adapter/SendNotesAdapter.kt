@@ -10,10 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.group1.notamonotako.R
 import com.group1.notamonotako.api.SoundManager
-import com.group1.notamonotako.api.requests_responses.notification.GetNotification
 import com.group1.notamonotako.api.requests_responses.sendNotes.getSentNotesData
-import com.group1.notamonotako.views.ViewHome
-import com.group1.notamonotako.views.ViewSendNotes
+import com.group1.notamonotako.activities.view_contents.ViewSendNotes
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

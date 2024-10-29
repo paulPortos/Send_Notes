@@ -1,9 +1,8 @@
-package com.group1.notamonotako.views
+package com.group1.notamonotako.activities.extra_activities
 
 import ApiService
 import TokenManager.clearToken
 import TokenManager.getToken
-import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.media.MediaPlayer
@@ -18,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.group1.notamonotako.R
 import com.group1.notamonotako.api.AccountManager
+import com.group1.notamonotako.activities.auth_activity.SignInActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

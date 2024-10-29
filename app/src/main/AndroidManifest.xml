@@ -17,65 +17,62 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".views.ViewSendNotes"
+            android:name=".activities.view_contents.ViewSendNotes"
             android:exported="false" />
         <activity
-            android:name=".views.SendNotesActivity"
+            android:name=".activities.extra_activities.SendNotesActivity"
             android:exported="false" />
         <activity
-            android:name=".views.SendMail"
-            android:exported="false" />
-        <activity
-            android:name=".views.CommentActivity"
+            android:name=".activities.extra_activities.CommentActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".views.NotificationActivity"
+            android:name=".activities.extra_activities.NotificationActivity"
             android:exported="false" />
         <activity
-            android:name=".views.AboutActivity"
+            android:name=".activities.extra_activities.AboutActivity"
             android:exported="false" />
         <activity
-            android:name=".views.ViewFlashcards"
+            android:name=".activities.view_contents.ViewFlashcards"
             android:exported="false" />
         <activity
-            android:name=".views.ViewHome"
+            android:name=".activities.view_contents.ViewHome"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".views.ChangePassword"
+            android:name=".activities.extra_activities.ChangePassword"
             android:exported="false" />
         <activity
-            android:name=".views.ForgotPassword_ResetPassword"
+            android:name=".activities.extra_activities.ForgotPassword_ResetPassword"
             android:exported="false" />
         <activity
-            android:name=".views.ForgotPassword_EmailVerification"
+            android:name=".activities.extra_activities.ForgotPassword_EmailVerification"
             android:exported="false" />
         <activity
-            android:name=".views.AddFlashcards"
+            android:name=".activities.add_contents.AddFlashcards"
             android:exported="false" />
         <activity
-            android:name=".views.AddNotes"
+            android:name=".activities.add_contents.AddNotes"
             android:exported="false" />
         <activity
-            android:name=".views.ViewMynotes"
+            android:name=".activities.view_contents.ViewMynotes"
             android:exported="false" />
         <activity
-            android:name=".views.SettingsActivity"
+            android:name=".activities.extra_activities.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".views.SignInActivity"
+            android:name=".activities.auth_activity.SignInActivity"
             android:exported="false"
             android:launchMode="singleTop" />
         <activity
-            android:name=".views.HomeActivity"
+            android:name=".activities.main_activity.HomeActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".views.SignUpActivity"
+            android:name=".activities.auth_activity.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".views.SplashActivity"
+            android:name=".activities.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

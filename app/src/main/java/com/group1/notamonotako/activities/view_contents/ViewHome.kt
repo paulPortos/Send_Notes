@@ -1,37 +1,26 @@
-package com.group1.notamonotako.views
+package com.group1.notamonotako.activities.view_contents
 
 import ApiService
 import TokenManager
-import android.animation.ObjectAnimator
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
-import android.view.MotionEvent
-import android.view.View
-import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
 import com.group1.notamonotako.R
 import com.group1.notamonotako.api.AccountManager
-import com.group1.notamonotako.api.requests_responses.comments.CommentPostRequest
-import com.group1.notamonotako.api.requests_responses.public_notes.getPublicNotes
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import com.group1.notamonotako.api.SoundManager
+import com.group1.notamonotako.activities.extra_activities.CommentActivity
 
 class ViewHome : AppCompatActivity() {
     private lateinit var btnLike : ImageButton

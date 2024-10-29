@@ -1,4 +1,4 @@
-package com.group1.notamonotako.views
+package com.group1.notamonotako.activities.extra_activities
 
 import ApiService
 import android.content.Intent
@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.group1.notamonotako.R
 import com.group1.notamonotako.api.ResetOtp
 import com.group1.notamonotako.api.requests_responses.forgetPassword.reset_Password
+import com.group1.notamonotako.activities.auth_activity.SignInActivity
 import kotlinx.coroutines.launch
 
 class ForgotPassword_ResetPassword : AppCompatActivity() {

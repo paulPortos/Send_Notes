@@ -1,10 +1,9 @@
-package com.group1.notamonotako.views
+package com.group1.notamonotako.activities
 
 import android.content.Context
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import com.group1.notamonotako.R

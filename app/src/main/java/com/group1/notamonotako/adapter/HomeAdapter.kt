@@ -2,22 +2,15 @@ package com.group1.notamonotako.adapter
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.group1.notamonotako.R
-import com.group1.notamonotako.api.AccountManager
 import com.group1.notamonotako.api.SoundManager
 import com.group1.notamonotako.api.requests_responses.public_notes.getPublicNotes
-import com.group1.notamonotako.api.requests_responses.signin.User
-import com.group1.notamonotako.views.ViewHome
-import com.group1.notamonotako.views.ViewSendNotes
+import com.group1.notamonotako.activities.view_contents.ViewHome
 
 class HomeAdapter(val context: Context, private var data: List<getPublicNotes>) : RecyclerView.Adapter<HomeAdapter.ItemViewHolder>() {
 

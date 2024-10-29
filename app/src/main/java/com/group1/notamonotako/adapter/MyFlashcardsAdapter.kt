@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.group1.notamonotako.R
 import com.group1.notamonotako.api.SoundManager
 import com.group1.notamonotako.api.requests_responses.flashcards.GetFlashcards
-import com.group1.notamonotako.views.ViewFlashcards
+import com.group1.notamonotako.activities.view_contents.ViewFlashcards
 
 class MyFlashcardsAdapter(
     private val context: Context,
