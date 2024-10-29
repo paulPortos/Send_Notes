@@ -163,7 +163,7 @@ class ViewMynotes : AppCompatActivity() {
             val sentToEmail = etEmail.text.toString().trim()
             val sendByEmail = getEmail().toString()
             if (sendByEmail.isEmpty()){
-                Toast.makeText(this, "Email cannot be empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Email cannot be empty.", Toast.LENGTH_SHORT).show()
             } else {
                 sendNotes(noteId, sentToEmail, sendByEmail)
             }
@@ -186,7 +186,7 @@ class ViewMynotes : AppCompatActivity() {
             val contentsString = Content.text.toString()
             val publicDefaultValue = false
             if (publicize){
-                Toast.makeText(this, "Note already public", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Note already public.", Toast.LENGTH_SHORT).show()
             } else {
                 shareNote(noteId, titleString, creatorsUsername, creatorsEmail, contentsString, publicDefaultValue, publicize)
             }
@@ -243,10 +243,10 @@ class ViewMynotes : AppCompatActivity() {
                         updateNote(noteId, publicize, toPublic)
                     }
                 } else {
-                    Toast.makeText(this, "No changes detected", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "No changes detected.", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(this, "Note ID is missing", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Note ID is missing.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -294,12 +294,12 @@ class ViewMynotes : AppCompatActivity() {
                 if (response.isSuccessful) {
                     if (!publicize) {
                         setToPublicIntoTrue(notesId)
-                        postPendingNotif(notesId, creatorEmail, "Your note $title has been shared")
-                        Toast.makeText(this@ViewMynotes, "Note shared successfully", Toast.LENGTH_SHORT).show()
+                        postPendingNotif(notesId, creatorEmail, "Your note $title has been shared.")
+                        Toast.makeText(this@ViewMynotes, "Note shared successfully!", Toast.LENGTH_SHORT).show()
                     }
                     Log.e("ShareNote", "Response: ${response.body()}")
                 } else if(response.code() == 409){
-                    Toast.makeText(this@ViewMynotes, "Note already shared and pending", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ViewMynotes, "Note already shared and pending!", Toast.LENGTH_SHORT).show()
                 }else {
                     Toast.makeText(this@ViewMynotes, "Failed to share note: ${response.code()}", Toast.LENGTH_SHORT).show()
                     Log.e("ShareNote", "Error: ${response.code()}, Message: ${response.message()}")
@@ -316,7 +316,7 @@ class ViewMynotes : AppCompatActivity() {
     private fun deleteNote(noteId: Int) {
         val token = TokenManager.getToken()
         if (token == null) {
-            Toast.makeText(this, "Authorization token missing", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Authorization token missing!", Toast.LENGTH_SHORT).show()
             return
         }
         Log.d("DeleteNote", "Token: $token, Note ID: $noteId")
@@ -328,7 +328,7 @@ class ViewMynotes : AppCompatActivity() {
                     apiService.deleteNote("Bearer $token", noteId)  // Ensure token is correctly formatted
                 }
                 if (response.isSuccessful) {
-                    Toast.makeText(this@ViewMynotes, "Note deleted successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ViewMynotes, "Note deleted successfully!", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this@ViewMynotes, HomeActivity::class.java)
                     intent.putExtra("showMyNotesFragment", true)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -348,13 +348,13 @@ class ViewMynotes : AppCompatActivity() {
     private fun updateNote(noteId: Int, publicize: Boolean, toPublic: Boolean) {
         val token = TokenManager.getToken()
         if (token == null) {
-            Toast.makeText(this, "Authorization token missing", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Authorization token missing!", Toast.LENGTH_SHORT).show()
             return
         }
         val updatedTitle = etTitle.text.toString()
         val updatedContent = Content.text.toString()
         if (updatedTitle.isEmpty() || updatedContent.isEmpty()) {
-            Toast.makeText(this, "Title or content cannot be empty", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Title or content cannot be empty.", Toast.LENGTH_SHORT).show()
             return
         }
         Log.d("UpdateNote", "Token: $token, Note ID: $noteId")
@@ -406,14 +406,14 @@ class ViewMynotes : AppCompatActivity() {
     private fun setToPublicIntoTrue(noteId: Int){
         val token = TokenManager.getToken()
         if (token == null) {
-            Toast.makeText(this, "Authorization token missing", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Authorization token missing!", Toast.LENGTH_SHORT).show()
             return
         }
         val updatedTitle = etTitle.text.toString()
         val updatedContent = Content.text.toString()
         val toPublic = true
         if (updatedTitle.isEmpty() || updatedContent.isEmpty()) {
-            Toast.makeText(this, "Title or content cannot be empty", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Title or content cannot be empty.", Toast.LENGTH_SHORT).show()
             return
         }
         lifecycleScope.launch {

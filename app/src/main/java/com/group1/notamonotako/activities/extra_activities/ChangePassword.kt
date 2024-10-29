@@ -66,9 +66,9 @@ class ChangePassword : AppCompatActivity() {
             val newPass = etNewPassword.text.toString()
             val confirmpass = etConfirmNewPassword.text.toString()
             if (newPass != confirmpass) {
-                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_SHORT).show()
             }else if(oldPass.isEmpty() && newPass.isEmpty()){
-                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please fill in all fields.", Toast.LENGTH_SHORT).show()
             } else {
                 changePassword(oldPass, newPass)
             }
@@ -80,7 +80,7 @@ class ChangePassword : AppCompatActivity() {
     private fun changePassword(oldPass: String, newPass: String) {
 
         if (oldPass == newPass) {
-            Toast.makeText(this@ChangePassword, "New password cannot be the same as the old password", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@ChangePassword, "New password cannot be the same as the old password.", Toast.LENGTH_SHORT).show()
             return
         }
         lifecycleScope.launch {
@@ -92,7 +92,7 @@ class ChangePassword : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Toast.makeText(
                         this@ChangePassword,
-                        "Password changed successfully",
+                        "Password changed successfully!",
                         Toast.LENGTH_SHORT
                     ).show()
                     btnConfirmResetPassword.isClickable = false
@@ -128,18 +128,18 @@ class ChangePassword : AppCompatActivity() {
                 btnConfirmResetPassword.isClickable = true
 
                 Log.e("ChangePassword", "HttpException: ${e.message}")
-                Toast.makeText(this@ChangePassword, "Something went wrong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ChangePassword, "Something went wrong!", Toast.LENGTH_SHORT).show()
             } catch (e: Exception) {
                 btnConfirmResetPassword.isClickable = true
 
                 Log.e("ChangePassword", "Exception: ${e.message}")
-                Toast.makeText(this@ChangePassword, "Something went wrong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ChangePassword, "Something went wrong!", Toast.LENGTH_SHORT).show()
             }
         }
     }
     private fun logoutUser() {
         val token = getToken() ?: run {
-            Toast.makeText(this@ChangePassword, "No token found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@ChangePassword, "No token found!", Toast.LENGTH_SHORT).show()
             return
         }
         val apiService = RetrofitInstance.create(ApiService::class.java)

@@ -141,7 +141,6 @@ class ViewHome : AppCompatActivity() {
 
                 if (response.isSuccessful) {
                     val commentCount = response.body()?.comment_count ?: 0
-
                     tvCommentsCount.text = commentCount.toString()
                     Log.d("countercomment", "Comment count: $commentCount")
                 }
@@ -153,6 +152,7 @@ class ViewHome : AppCompatActivity() {
 
         }
     }
+
     private val commentActivityResultLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()) { result ->
         // Check if the result is okay
@@ -162,8 +162,6 @@ class ViewHome : AppCompatActivity() {
             getCommentCount(noteId, tvCommentsCount)
         }
     }
-
-
 
     private fun likePostNotes(noteId: Int){
         lifecycleScope.launch {
@@ -187,6 +185,7 @@ class ViewHome : AppCompatActivity() {
                         Log.e("ViewHome", "Failed to like post: ${response.errorBody()?.string()} ")
                     }
                 } else {
+                    Toast.makeText(this@ViewHome, "Authentication Token is null!", Toast.LENGTH_SHORT).show()
                     Log.d("ViewHome", "Token is null")
                 }
         } catch (e: Exception) {
@@ -244,10 +243,8 @@ class ViewHome : AppCompatActivity() {
                         ifLiked = note.has_liked
                         ifDisliked = note.has_disliked
                         updateLikeDislikeUI()
-                        Log.d("ViewHome", "has_liked: $ifLiked, has_disliked: $ifDisliked")
                     }
                 }
-
             } catch (e: Exception) {
                 Toast.makeText(this@ViewHome, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
                 Log.e("ViewHome", "Exception: ${e.message}")

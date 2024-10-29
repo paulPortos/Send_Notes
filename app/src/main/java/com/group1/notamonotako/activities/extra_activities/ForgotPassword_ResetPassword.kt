@@ -45,7 +45,7 @@ class ForgotPassword_ResetPassword : AppCompatActivity() {
             btnConfirmResetPassword.isClickable = true
 
             if(password.isEmpty()) {
-                Toast.makeText(this@ForgotPassword_ResetPassword, "Please enter your password", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ForgotPassword_ResetPassword, "Please enter your password!", Toast.LENGTH_SHORT).show()
                 btnConfirmResetPassword.isClickable = true
 
             } else if(password == confirmPassword) {
@@ -54,28 +54,25 @@ class ForgotPassword_ResetPassword : AppCompatActivity() {
                         val apiService = RetrofitInstance.create(ApiService::class.java)
                         val newPassword = reset_Password(password = password, token = OTP, email = email)
                         val response = apiService.resetPassword(newPassword)
-
                         if(response.code()==400){
-                            Toast.makeText(this@ForgotPassword_ResetPassword, "Your new password cannot be the same as the old password", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ForgotPassword_ResetPassword, "Your new password cannot be the same as the old password.", Toast.LENGTH_SHORT).show()
                         }else{
                             if(response.isSuccessful) {
-                                Toast.makeText(this@ForgotPassword_ResetPassword, "Password changed successfully", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@ForgotPassword_ResetPassword, "Password changed successfully!", Toast.LENGTH_SHORT).show()
                                 btnConfirmResetPassword.isClickable = false
                                 // Navigate to SignInActivity
                                 val intent = Intent(this@ForgotPassword_ResetPassword, SignInActivity::class.java)
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK // Prevent going back
                                 startActivity(intent)
-
                         }}
-
                     }
                 } catch (e: Exception) {
                     btnConfirmResetPassword.isClickable = true
-                    Toast.makeText(this@ForgotPassword_ResetPassword, "Something went wrong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ForgotPassword_ResetPassword, "Something went wrong!", Toast.LENGTH_SHORT).show()
                 }
             } else {
                 btnConfirmResetPassword.isClickable = true
-                Toast.makeText(this@ForgotPassword_ResetPassword, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ForgotPassword_ResetPassword, "Passwords do not match!", Toast.LENGTH_SHORT).show()
             }
         }
 

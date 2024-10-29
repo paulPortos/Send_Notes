@@ -55,7 +55,7 @@ class SendNotesActivity : AppCompatActivity() {
 
                 if (response.isSuccessful) {
                     val notes = response.body()
-                    Log.i("SendNotesActivity", "Response successful")
+                    Log.i("SendNotesActivity", "Response successful!")
                     if (notes != null) {
                         val adopter = SendNotesAdapter(this@SendNotesActivity, notes)
                         rvSendNotes.adapter = adopter

@@ -98,14 +98,14 @@ class ViewSendNotes : AppCompatActivity() {
                     val response = apiService.deleteSentNote(bearerToken, id)
                     if (response.isSuccessful) {
                         if (copy) {
-                            Toast.makeText(this@ViewSendNotes, "Note copied successfully", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ViewSendNotes, "Note copied successfully!", Toast.LENGTH_SHORT).show()
                             Log.d("ViewSendNotes", "Note copied successfully")
                             val intent = Intent(this@ViewSendNotes, HomeActivity::class.java)
                             intent.putExtra("showMyNotesFragment", true) // Pass this extra to show the MyNotes fragment
                             startActivity(intent)
                             finish()
                         } else {
-                            Toast.makeText(this@ViewSendNotes, "Note deleted successfully", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ViewSendNotes, "Note deleted successfully!", Toast.LENGTH_SHORT).show()
                             Log.d("ViewSendNotes", "Note deleted successfully")
                             val intent = Intent(this@ViewSendNotes, HomeActivity::class.java)
                             intent.putExtra("showMyNotesFragment", true) // Pass this extra to show the MyNotes fragment
@@ -114,10 +114,10 @@ class ViewSendNotes : AppCompatActivity() {
                         }
                     } else {
                         Log.e("ViewSendNotes", "Failed to delete note: ${response.code()}")
-                        Toast.makeText(this@ViewSendNotes, "Failed to delete note", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@ViewSendNotes, "Failed to delete note!", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(this@ViewSendNotes, "Token not found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@ViewSendNotes, "Token not found!", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e("ViewSendNotes", "Exception: ${e.message}")

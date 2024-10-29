@@ -110,7 +110,7 @@ class SettingsActivity : AppCompatActivity() {
     private fun logoutUser() {
         btnsign_out.isClickable = true
         val token = getToken() ?: run {
-            Toast.makeText(this@SettingsActivity, "No token found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@SettingsActivity, "No token found!", Toast.LENGTH_SHORT).show()
             return
         }
         val apiService = RetrofitInstance.create(ApiService::class.java)
@@ -122,7 +122,7 @@ class SettingsActivity : AppCompatActivity() {
                     clearToken()
                     Toast.makeText(
                         this@SettingsActivity,
-                        "Logged Out Successfully",
+                        "Logged Out Successfully!",
                         Toast.LENGTH_SHORT
                     ).show()
                     val intent = Intent(this@SettingsActivity, SignInActivity::class.java)

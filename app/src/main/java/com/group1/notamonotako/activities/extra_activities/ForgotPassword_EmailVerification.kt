@@ -31,14 +31,8 @@ class ForgotPassword_EmailVerification : AppCompatActivity() {
     private lateinit var btnGetOTP : AppCompatButton
     private lateinit var btnConfirmVerification :AppCompatButton
     private lateinit var progressBar: ProgressBar
-    private var progressStatus = 0
-    private val handler = Handler(Looper.getMainLooper())
-
     // Variable to store the token received from the server
     private var OTP: String? = null
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,7 +51,6 @@ class ForgotPassword_EmailVerification : AppCompatActivity() {
         progressBar.max = 5  // Set max value to 5 for 5 seconds
         textInputLayout.visibility = View.INVISIBLE
 
-
         btnGetOTP.setOnClickListener {
             progressBar.visibility = View.VISIBLE
 
@@ -72,48 +65,37 @@ class ForgotPassword_EmailVerification : AppCompatActivity() {
                     Toast.makeText(this@ForgotPassword_EmailVerification, "Please enter your email", Toast.LENGTH_SHORT).show()
                     btnConfirmVerification.isClickable = true
                     progressBar.visibility = View.GONE
-
-
                 }else{
                     try {
-
                         val response = apiService.forgotPassword(forgotPassword)
                         val responseBody = response.body()
-
                         OTP = responseBody?.OTP
                         OTP?.let { OtpForget ->
                             ResetOtp.saveForgotOTP(OtpForget)
                             ResetOtp.saveEmail(email)
                         }
-
                         if(response.isSuccessful){
                             btnGetOTP.isClickable = false
-                            Toast.makeText(this@ForgotPassword_EmailVerification, "OTP sent", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ForgotPassword_EmailVerification, "OTP sent!", Toast.LENGTH_SHORT).show()
                             textInputLayout.visibility = View.VISIBLE
                             progressBar.visibility = View.GONE
-
                             OTPcountdown()
                         }else if(response.code() == 404){
                             btnConfirmVerification.isClickable = true
                             progressBar.visibility = View.GONE
-
-                            Toast.makeText(this@ForgotPassword_EmailVerification, "email not found", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ForgotPassword_EmailVerification, "email not found!", Toast.LENGTH_SHORT).show()
                         }else{
                             btnConfirmVerification.isClickable = true
                             progressBar.visibility = View.GONE
-
-                            Toast.makeText(this@ForgotPassword_EmailVerification, "Something went wrong", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ForgotPassword_EmailVerification, "Something went wrong!", Toast.LENGTH_SHORT).show()
                         }
                     }   catch (e: IOException){
                         btnConfirmVerification.isClickable = true
                         progressBar.visibility = View.GONE
-
-
                         Toast.makeText(this@ForgotPassword_EmailVerification, "Network error: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
-
         }
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
@@ -121,25 +103,22 @@ class ForgotPassword_EmailVerification : AppCompatActivity() {
             val otp = etOTP.text.toString()
 
             if (otp.isEmpty()){
-                Toast.makeText(this@ForgotPassword_EmailVerification, "Please enter your OTP", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ForgotPassword_EmailVerification, "Please enter your OTP!", Toast.LENGTH_SHORT).show()
             }else{
                if(otp == OTP){
                    btnConfirmVerification.isClickable = false
                    val intent = Intent(this@ForgotPassword_EmailVerification, ForgotPassword_ResetPassword::class.java)
                    startActivity(intent)
-
                }else{
-                   Toast.makeText(this@ForgotPassword_EmailVerification, "Invalid OTP, please try again", Toast.LENGTH_SHORT).show()
+                   Toast.makeText(this@ForgotPassword_EmailVerification, "Invalid OTP, please try again!", Toast.LENGTH_SHORT).show()
                }
             }
-
         }
 
         btnBack.setOnClickListener {
             val intent = Intent(this@ForgotPassword_EmailVerification, SignInActivity::class.java)
             startActivity(intent)
         }
-
     }
     private fun OTPcountdown(){
         btnGetOTP.isEnabled = false

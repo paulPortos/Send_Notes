@@ -145,7 +145,6 @@
 
             btnBack.setOnClickListener {
                 soundManager.playSoundEffect()
-
                 finish()
             }
 
@@ -187,7 +186,7 @@
                     }
                     if (response.isSuccessful){
                         Log.d("UpdateFlashcards", "Response Code: ${response.code()}")
-                        Toast.makeText(this@ViewFlashcards, "Flashcards updated successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@ViewFlashcards, "Flashcards updated successfully!", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(this@ViewFlashcards, "Failed to update flashcards: ${response.code()}", Toast.LENGTH_SHORT).show()
                         Log.e("UpdateFlashcards", "Error: ${response.code()}")
@@ -204,7 +203,7 @@
         private fun deleteFlashcards(flashcardsId: Int){
             val token = TokenManager.getToken()
             if (token == null) {
-                Toast.makeText(this, "Authorization token missing", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Authorization token missing!", Toast.LENGTH_SHORT).show()
                 return
             }
             lifecycleScope.launch {
@@ -214,7 +213,7 @@
                         apiService.deleteFlashcards("Bearer $token", flashcardsId)
                         }
                         if (response.isSuccessful) {
-                            Toast.makeText(this@ViewFlashcards, "Flashcards deleted successfully", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ViewFlashcards, "Flashcards deleted successfully!", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@ViewFlashcards, HomeActivity::class.java)
                             intent.putExtra("showFlashcardFragment", true)
                             startActivity(intent)

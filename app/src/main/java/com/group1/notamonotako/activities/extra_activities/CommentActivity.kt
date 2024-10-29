@@ -81,7 +81,7 @@ class CommentActivity : AppCompatActivity() {
         val token = TokenManager.getToken()  // Assuming you store the token here
 
         if (noteId == -1 || token == null) {
-            Toast.makeText(this, "Invalid note or missing token", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Invalid note or missing token.", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -108,7 +108,7 @@ class CommentActivity : AppCompatActivity() {
                     }
                 } else {
                     Log.e("FetchCommentsError", "Failed to fetch comments: ${response.code()}")
-                    Toast.makeText(this@CommentActivity, "Failed to fetch comments", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@CommentActivity, "Failed to fetch comments.", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e("FetchCommentsException", "Error: ${e.message}")
@@ -124,7 +124,7 @@ class CommentActivity : AppCompatActivity() {
             val token = TokenManager.getToken() // Assume token is stored in TokenManager
 
             if (token == null) {
-                Toast.makeText(this, "Authorization token missing", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Authorization token missing!", Toast.LENGTH_SHORT).show()
                 return
             } else {
                 lifecycleScope.launch {
@@ -135,7 +135,6 @@ class CommentActivity : AppCompatActivity() {
 
                         if (response.isSuccessful) {
                             // Handle successful comment submission
-                            Toast.makeText(this@CommentActivity, "Comment Submitted", Toast.LENGTH_SHORT).show()
                             etAddComment.text?.clear()
                             fetchComments() // Refresh comments
                         } else {
@@ -152,7 +151,7 @@ class CommentActivity : AppCompatActivity() {
                 }
             }
         } else {
-            Toast.makeText(this, "Please input your comment", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please input your comment.", Toast.LENGTH_SHORT).show()
         }
     }
     override fun onDestroy() {

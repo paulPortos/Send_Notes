@@ -77,23 +77,20 @@ class NotificationActivity : AppCompatActivity() {
                     if (notifications.isEmpty()) {
                         rvNotification.visibility = View.GONE
                         tvNoNotifications.visibility = View.VISIBLE
-                        }
-
+                    }
                 } else {
-                    Toast.makeText(this@NotificationActivity, "Failed to fetch notifications", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@NotificationActivity, "Failed to fetch notifications!", Toast.LENGTH_SHORT).show()
                     Log.d("notifications", "Response code: ${response.code()}") // Log the response code
                     Log.d("notifications", "Error body: ${response.errorBody()?.string()}") // Log error body
                     Log.d("notifications", response.message())
-                    Toast.makeText(this@NotificationActivity, "Failed to fetch notifications", Toast.LENGTH_SHORT).show()
                 }
              } catch (e: Exception) {
-                 Toast.makeText(this@NotificationActivity, "Failed to fetch notifications", Toast.LENGTH_SHORT).show()
+                 Toast.makeText(this@NotificationActivity, "Failed to fetch notifications!", Toast.LENGTH_SHORT).show()
                 Log.d("notifications", e.message.toString())
                 rvNotification.visibility = View.GONE
                 tvNoInternet.visibility = View.VISIBLE
-
             } catch (e: HttpException){
-                Toast.makeText(this@NotificationActivity, "Failed to fetch notifications", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@NotificationActivity, "Failed to fetch notifications!", Toast.LENGTH_SHORT).show()
                 Log.d("notifications", e.message.toString())
             }
         }

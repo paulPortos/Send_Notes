@@ -112,7 +112,6 @@ class AddFlashcards : AppCompatActivity() {
         }
         btnCheck.setOnClickListener {
             soundManager.playSoundEffect()
-
             val content = contents.text.toString()
             if (content.isNotBlank()) {
                 addToContentsList(content)
@@ -129,7 +128,7 @@ class AddFlashcards : AppCompatActivity() {
                 startActivity(intent)
             } else {
                 btnCheck.isClickable=true
-                Toast.makeText(this, "Title and cards are required", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Title and Cards are required.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -141,17 +140,14 @@ class AddFlashcards : AppCompatActivity() {
         }
         btnAbout.setOnClickListener {
             soundManager.playSoundEffect()
-
             if (tvAbout.visibility == TextView.VISIBLE) {
                 tvAbout.visibility = TextView.GONE
                 viewBlur.visibility = View.GONE
-
             } else {
                 tvAbout.visibility = TextView.VISIBLE
                 viewBlur.visibility = View.VISIBLE
                 tvAbout.setOnTouchListener { _, _ -> true }
                 viewBlur.setOnTouchListener { _, _ -> true }
-
             }
         }
     }
@@ -171,9 +167,9 @@ class AddFlashcards : AppCompatActivity() {
             try {
                 val response = apiService.postFlashcards(flashcardsData)
                 if (response.isSuccessful) {
-                    Toast.makeText(this@AddFlashcards, "Flashcards created successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddFlashcards, "Flashcard created successfully!", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(this@AddFlashcards, "Failed to create flashcards", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddFlashcards, "Failed to create flashcards.", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 Log.e("AddFlashcards", "Error: ${e.message}", e)

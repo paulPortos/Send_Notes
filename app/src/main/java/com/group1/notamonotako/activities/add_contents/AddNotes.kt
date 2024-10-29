@@ -72,16 +72,14 @@ class AddNotes : AppCompatActivity() {
             if (title.isEmpty() || contents.isEmpty()) {
                 doneButton.isClickable=true
                 // Show an error message or take appropriate action
-                Toast.makeText(this, "Title and Contents must not be empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Title and Contents must not be empty.", Toast.LENGTH_SHORT).show()
             } else {
                 try {
                     if (networkManager.isNetworkAvailable(this)) {
-                        // Call addNote if online
-                        //addNote(title, contents)
+                        addNote(title, contents)
                     } else {
                         // Call upsertNote if offline
                         //upsertNote(title, contents)
-                        Toast.makeText(this, "Note saved offline", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: Exception){
                     Log.d("OOO", "Error $e")
@@ -98,10 +96,10 @@ class AddNotes : AppCompatActivity() {
                 val notesData = Notes(title = title, contents = contents, toPublic = false, isPublic = false)
                 val upsert = notesDao.UpsertNotes(notesData)
                 Log.e("Upsert Notes", "Upsert = $upsert")
-                Toast.makeText(this@AddNotes, "Uploaded offline", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AddNotes, "Uploaded offline!", Toast.LENGTH_SHORT).show()
             } catch (e: Exception){
                 Log.e("Upsert Notes", "Error upserting note: $e")
-                Toast.makeText(this@AddNotes, "Failed to upsert note", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@AddNotes, "Failed Upload.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -129,17 +127,17 @@ class AddNotes : AppCompatActivity() {
                             putExtra("note_id", noteId)
                             putExtra("date", dateString)
                         }
-                        Toast.makeText(this@AddNotes, "Note created successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@AddNotes, "Note created successfully!", Toast.LENGTH_SHORT).show()
                         // Clear back stack and start Mynotes activity
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
                         finish()
                     } else {
-                        Toast.makeText(this@AddNotes, "Note created but ID is missing", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@AddNotes, "Note created but ID is missing.", Toast.LENGTH_SHORT).show()
                         progressBar.visibility = View.INVISIBLE
                     }
                 } else {
-                    Toast.makeText(this@AddNotes, "Failed to create note", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddNotes, "Failed to create note.", Toast.LENGTH_SHORT).show()
                     progressBar.visibility = View.INVISIBLE
 
                 }
