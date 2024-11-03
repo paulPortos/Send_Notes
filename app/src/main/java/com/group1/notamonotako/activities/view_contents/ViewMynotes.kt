@@ -1,6 +1,7 @@
 package com.group1.notamonotako.activities.view_contents
 
 import ApiService
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
@@ -14,6 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.group1.notamonotako.R
@@ -28,6 +30,13 @@ import com.group1.notamonotako.api.requests_responses.notes.UpdateToPublicNotes
 import com.group1.notamonotako.api.requests_responses.notification.PostPendingNotification
 import com.group1.notamonotako.api.requests_responses.sendNotes.SendNotesRequest
 import com.group1.notamonotako.activities.main_activity.HomeActivity
+import com.group1.notamonotako.api.requests_responses.notes.Note
+import com.group1.notamonotako.network.NetworkManager
+import com.group1.notamonotako.roomdb.Notes
+import com.group1.notamonotako.roomdb.NotesDao
+import com.group1.notamonotako.roomdb.NotesDatabase
+import com.group1.notamonotako.roomdb.database_manager.DatabaseManager
+import com.group1.notamonotako.roomdb.database_manager.NotesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -58,11 +67,13 @@ class ViewMynotes : AppCompatActivity() {
     private lateinit var btnCancelSend: AppCompatButton
     private lateinit var flSend : FrameLayout
     private lateinit var etEmail: EditText
+    private lateinit var notesDao : NotesDao
+    val notesRepository by lazy {
+        val notesDao = NotesDatabase.getInstance(this).dao
+        NotesRepository(notesDao)
+    }
 
-
-
-
-
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mynotes)
@@ -90,7 +101,8 @@ class ViewMynotes : AppCompatActivity() {
         soundManager = SoundManager(this) // Initialize SoundManager
         val isMuted = AccountManager.isMuted
         soundManager.updateMediaPlayerVolume(isMuted)
-
+        val networkManager = NetworkManager
+        notesDao = DatabaseManager.getNotesDao(this)
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
         val intent = intent
@@ -100,9 +112,6 @@ class ViewMynotes : AppCompatActivity() {
         val noteId = intent.getIntExtra("note_id",-1)
         val publicize = intent.getBooleanExtra("public",false) ?: false
         val toPublic = intent.getBooleanExtra("to_public", false) ?: false
-        //log public and to public
-        Log.d("public", publicize.toString())
-        Log.d("toPublic", toPublic.toString())
 
         val recentTitle = title.toString()
         val recentContents = contents.toString()
@@ -110,20 +119,24 @@ class ViewMynotes : AppCompatActivity() {
         this.etTitle.setText(title)
         this.Content.setText(contents)
 
-        if (dateString != null) {
-            // Define the input and output date formats
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        if (networkManager.isNetworkAvailable(this)) {
+            if (dateString != null) {
+                // Define the input and output date formats
+                val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault())
+                val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
-            try {
-                val date = inputFormat.parse(dateString)
-                val formattedDate = date?.let { outputFormat.format(it) }
-                this.Date.text = formattedDate
-            } catch (e: Exception) {
-                // Handle parsing exception
-                e.printStackTrace()
-                this.Date.text = "Invalid date"
+                try {
+                    val date = inputFormat.parse(dateString)
+                    val formattedDate = date?.let { outputFormat.format(it) }
+                    this.Date.text = formattedDate
+                } catch (e: Exception) {
+                    // Handle parsing exception
+                    e.printStackTrace()
+                    this.Date.text = "Invalid date"
+                }
             }
+        } else {
+            this.Date.text = "(Offline Mode)"
         }
 
         flDelete.visibility = View.GONE
@@ -131,13 +144,15 @@ class ViewMynotes : AppCompatActivity() {
         viewBlur.visibility = View.GONE
 
         sharebtn.setOnClickListener{
-            flShare.visibility = View.VISIBLE
-            viewBlur.visibility = View.VISIBLE
-            flShare.setOnTouchListener { _, _ -> true }
-            viewBlur.setOnTouchListener { _, _ -> true }
-            soundManager.playSoundEffect()
-
-
+            if (networkManager.isNetworkAvailable(this)) {
+                flShare.visibility = View.VISIBLE
+                viewBlur.visibility = View.VISIBLE
+                flShare.setOnTouchListener { _, _ -> true }
+                viewBlur.setOnTouchListener { _, _ -> true }
+                soundManager.playSoundEffect()
+            } else {
+                Toast.makeText(this, "Cannot share in offline mode.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         btnSend.setOnClickListener {
@@ -155,7 +170,6 @@ class ViewMynotes : AppCompatActivity() {
             soundManager.playSoundEffect()
         }
 
-
         btnSendNotes.setOnClickListener {
             flSend.visibility = View.GONE
             soundManager.playSoundEffect()
@@ -169,12 +183,10 @@ class ViewMynotes : AppCompatActivity() {
             }
         }
 
-
         btnCancelShare.setOnClickListener{
             flShare.visibility = View.GONE
             viewBlur.visibility = View.GONE
             soundManager.playSoundEffect()
-
         }
 
         btnShare.setOnClickListener {
@@ -193,7 +205,6 @@ class ViewMynotes : AppCompatActivity() {
             flShare.visibility = View.INVISIBLE
             viewBlur.visibility = View.INVISIBLE
             soundManager.playSoundEffect()
-
         }
 
         deletebtn.setOnClickListener{
@@ -207,10 +218,13 @@ class ViewMynotes : AppCompatActivity() {
 
         btnDelete.setOnClickListener {
             soundManager.playSoundEffect()
-
             btnDelete.backgroundTintList= ContextCompat.getColorStateList(this, R.color.new_background_color)
-            if (noteId != -1) {
-                deleteNote(noteId)
+            if (networkManager.isNetworkAvailable(this)) {
+                if (noteId != -1) {
+                    deleteNote(noteId)
+                }
+            } else {
+                deleteOfflineNote(noteId)
             }
         }
 
@@ -234,21 +248,26 @@ class ViewMynotes : AppCompatActivity() {
             val contentsString = Content.text.toString()
             val creatorsUsername = getUsername().toString()
             val creatorsEmail = getEmail().toString()
-            if (noteId != -1) {
-                if (recentTitle != titleString || recentContents != contentsString) {
-                    if (publicize){
-                        shareNote(noteId, titleString, creatorsUsername, creatorsEmail, contentsString, false, publicize)
-                        updateNote(noteId, publicize, toPublic)
+            if (networkManager.isNetworkAvailable(this)) {
+                if (noteId != -1) {
+                    if (recentTitle != titleString || recentContents != contentsString) {
+                        if (publicize){
+                            shareNote(noteId, titleString, creatorsUsername, creatorsEmail, contentsString, false, publicize)
+                            updateNote(noteId, publicize, toPublic)
+                        } else {
+                            updateNote(noteId, publicize, toPublic)
+                        }
                     } else {
-                        updateNote(noteId, publicize, toPublic)
+                        Toast.makeText(this, "No changes detected.", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(this, "No changes detected.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Note ID is missing.", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(this, "Note ID is missing.", Toast.LENGTH_SHORT).show()
+                updateOfflineNote(noteId, titleString, creatorsUsername)
             }
         }
+
     }
 
     private fun sendNotes (notesId: Int, sendTo: String, sentBy: String){
@@ -468,6 +487,42 @@ class ViewMynotes : AppCompatActivity() {
             } catch (e: HttpException){
                 Toast.makeText(this@ViewMynotes, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
                 Log.e("PostPendingNotif", "Error: ${e.message}", e)
+            }
+        }
+    }
+
+    private fun updateOfflineNote(noteId: Int, title: String, contents: String, ) {
+        lifecycleScope.launch {
+            try {
+                val notesData = Notes(id = noteId, title, contents = contents, toPublic = false, isPublic = false)
+                val upsert = notesDao.UpsertNotes(notesData)
+                Log.e("Upsert Notes", "Upsert = $upsert")
+                Toast.makeText(this@ViewMynotes, "Update Success!", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@ViewMynotes, HomeActivity::class.java)
+                intent.putExtra("showMyNotesFragment", true)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            } catch (e: Exception){
+                Log.e("Upsert Notes", "Error upserting note: $e")
+                Toast.makeText(this@ViewMynotes, "Failed Upload.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun deleteOfflineNote(noteId: Int) {
+        lifecycleScope.launch {
+            try {
+                notesRepository.deleteOfflineNotes(noteId)
+                Toast.makeText(this@ViewMynotes, "Successfully deleted notes!", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@ViewMynotes, HomeActivity::class.java)
+                intent.putExtra("showMyNotesFragment", true)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()  // Finish Mynotes activity to avoid returning to it
+            } catch (e: Exception) {
+                Toast.makeText(this@ViewMynotes, "ERROR DELETE OFFLINE NOTE: $e", Toast.LENGTH_SHORT).show()
+                Log.e("Deldel", "$e" )
             }
         }
     }

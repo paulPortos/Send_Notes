@@ -12,6 +12,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -24,6 +25,7 @@ import com.group1.notamonotako.fragments.MyNotes
 import com.group1.notamonotako.activities.add_contents.AddFlashcards
 import com.group1.notamonotako.activities.add_contents.AddNotes
 import com.group1.notamonotako.activities.auth_activity.SignInActivity
+import com.group1.notamonotako.network.NetworkManager
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
@@ -91,7 +93,7 @@ class HomeActivity : AppCompatActivity() {
         viewBlur.visibility = View.GONE
         progressBar = findViewById(R.id.progressBar)
         progressBar.visibility = View.INVISIBLE
-
+        val networkManager = NetworkManager
         // Check for intent extras to determine which fragment to show
         if (savedInstanceState == null) {
             val showMyNotesFragment = intent.getBooleanExtra("showMyNotesFragment", false)
@@ -112,11 +114,14 @@ class HomeActivity : AppCompatActivity() {
         }
 
         flashcardsFabBtn.setOnClickListener {
-            soundManager.playSoundEffect()
-            val intent = Intent(this, AddFlashcards::class.java) // Create intent for Notes activity
-            startActivity(intent)
-            progressBar.visibility = View.INVISIBLE
-
+            if (networkManager.isNetworkAvailable(this)) {
+                soundManager.playSoundEffect()
+                val intent = Intent(this, AddFlashcards::class.java) // Create intent for Notes activity
+                startActivity(intent)
+                progressBar.visibility = View.INVISIBLE
+            } else {
+                Toast.makeText(this, "This feature is not available in offline mode.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         notesFabBtn.setOnClickListener {

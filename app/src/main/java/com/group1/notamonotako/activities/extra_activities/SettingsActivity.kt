@@ -18,6 +18,7 @@ import androidx.appcompat.widget.AppCompatButton
 import com.group1.notamonotako.R
 import com.group1.notamonotako.api.AccountManager
 import com.group1.notamonotako.activities.auth_activity.SignInActivity
+import com.group1.notamonotako.network.NetworkManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,23 +51,24 @@ class SettingsActivity : AppCompatActivity() {
         etemail = findViewById(R.id.tvemail2)
         etusername = findViewById(R.id.tvusername2)
         btnAbout = findViewById(R.id.btnAbout)
-
+        val networkManager = NetworkManager
         // Making the progressbar Invisible
         progressBar.visibility = View.INVISIBLE
 
         btnChangePassword.setOnClickListener {
-            mediaPlayer.start()
-            val intent = Intent(this@SettingsActivity, ChangePassword::class.java)
-            startActivity(intent)
+            if (networkManager.isNetworkAvailable(this)) {
+                mediaPlayer.start()
+                val intent = Intent(this@SettingsActivity, ChangePassword::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "This feature is not available in offline mode.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         btnBack.setOnClickListener {
-          
             progressBar.visibility = View.VISIBLE
             finish() // Remove this activity from the stack when going back
             mediaPlayer.start()
-
-
         }
 
         btnAbout.setOnClickListener {
@@ -75,7 +77,6 @@ class SettingsActivity : AppCompatActivity() {
             progressBar.visibility = View.VISIBLE
             finish() // Remove this activity from the stack when going back
             mediaPlayer.start()
-
         }
 
         val soundIsMuted = AccountManager.isMuted
@@ -94,8 +95,12 @@ class SettingsActivity : AppCompatActivity() {
         etusername.text = AccountManager.getUsername()
 
         btnsign_out.setOnClickListener {
-            logoutUser()
-            mediaPlayer.start()
+            if (networkManager.isNetworkAvailable(this)) {
+                logoutUser()
+                mediaPlayer.start()
+            } else {
+                Toast.makeText(this, "This feature is not available in offline mode.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
     // Save the sound preference (muted or not) in SharedPreferences

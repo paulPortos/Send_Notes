@@ -21,7 +21,6 @@ class MyNotesAdapter(val context: Context, val notelist: List<Note>) : RecyclerV
         val contents: TextView = noteView.findViewById(R.id.contents)
         val public : TextView = noteView.findViewById(R.id.tvPublic)
         val pending : TextView = noteView.findViewById(R.id.tvPending)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
@@ -29,9 +28,7 @@ class MyNotesAdapter(val context: Context, val notelist: List<Note>) : RecyclerV
         val Noteviewer: View = LayoutInflater.from(context)
             .inflate(R.layout.rv_mynotes_row, parent, false)
         return NotesViewHolder(Noteviewer)
-
     }
-
 
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
         val item = notelist[position]

@@ -26,6 +26,7 @@ import com.group1.notamonotako.api.SoundManager
 import com.group1.notamonotako.api.requests_responses.public_notes.getPublicNotes
 import com.group1.notamonotako.activities.GradientText
 import com.group1.notamonotako.activities.extra_activities.NotificationActivity
+import com.group1.notamonotako.network.NetworkManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -63,7 +64,7 @@ class Home : Fragment() {
         swiperefresh = view.findViewById(R.id.swipeRefreshHome)
         tvNoNotes = view.findViewById(R.id.tvNoNotes)
         tvNoInternet = view.findViewById(R.id.tvNoInternet)
-
+        val networkManager = NetworkManager
         svSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextChange(newText: String?): Boolean {
                 filterList(newText)
@@ -78,15 +79,10 @@ class Home : Fragment() {
 
         })
 
-
-
-
         btnSettings.setOnClickListener {
             val intent = Intent(requireContext(), SettingsActivity::class.java)
             startActivity(intent)
             soundManager.playSoundEffect()
-
-
         }
 
         btnNotification.setOnClickListener {
@@ -96,8 +92,6 @@ class Home : Fragment() {
             soundManager.playSoundEffect()
         }
 
-
-
         swiperefresh.setOnRefreshListener {
             fetchPublicNotes()
             swiperefresh.isRefreshing = false
@@ -106,7 +100,12 @@ class Home : Fragment() {
         GradientText.setGradientText(tvSendNotes, requireContext())
         rvhome.setHasFixedSize(true)
         layoutManager = LinearLayoutManager(this.context)
-        fetchPublicNotes()
+
+        if (networkManager.isNetworkAvailable(requireContext())) {
+            fetchPublicNotes()
+        } else {
+            Toast.makeText(requireContext(), "Offline mode.", Toast.LENGTH_SHORT).show()
+        }
         return view
     }
 

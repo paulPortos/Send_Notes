@@ -79,7 +79,7 @@ class AddNotes : AppCompatActivity() {
                         addNote(title, contents)
                     } else {
                         // Call upsertNote if offline
-                        //upsertNote(title, contents)
+                        upsertNote(title, contents)
                     }
                 } catch (e: Exception){
                     Log.d("OOO", "Error $e")

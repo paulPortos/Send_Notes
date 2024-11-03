@@ -23,6 +23,7 @@ import com.group1.notamonotako.api.SoundManager
 import com.group1.notamonotako.activities.GradientText
 import com.group1.notamonotako.activities.extra_activities.NotificationActivity
 import com.group1.notamonotako.activities.extra_activities.SettingsActivity
+import com.group1.notamonotako.network.NetworkManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -52,7 +53,7 @@ class MyFlashcards : Fragment() {
         btnNotification = view.findViewById(R.id.btnNotification)
         progressBar.visibility = View.INVISIBLE
         val soundManager = SoundManager(requireContext()) // Initialize SoundManager
-
+        val networkManager = NetworkManager
         // Set up Grid layout with 2 columns
         rv_myFlashcards.layoutManager = GridLayoutManager(requireContext(), 2)
         GradientText.setGradientText(tvMyFlashcards, requireContext())
@@ -76,8 +77,12 @@ class MyFlashcards : Fragment() {
             fetchFlashcards()
             swiperefresh.isRefreshing = false
         }
+        if (networkManager.isNetworkAvailable(requireContext())) {
+            fetchFlashcards()
+        } else {
+            Toast.makeText(requireContext(), "Offline mode", Toast.LENGTH_SHORT).show()
+        }
 
-        fetchFlashcards()
 
         return view
     }

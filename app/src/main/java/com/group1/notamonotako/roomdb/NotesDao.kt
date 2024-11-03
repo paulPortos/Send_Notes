@@ -16,4 +16,8 @@ interface NotesDao {
 
     @Query("SELECT * FROM notes ORDER BY id")
     suspend fun getOfflineNotes(): List<Notes>
+
+    // Delete a note by its ID
+    @Query("DELETE FROM notes WHERE id = :noteId")
+    suspend fun deleteNoteById(noteId: Int): Int
 }

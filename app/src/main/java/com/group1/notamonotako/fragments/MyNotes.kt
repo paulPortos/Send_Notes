@@ -1,6 +1,7 @@
 package com.group1.notamonotako.fragments
 
 import ApiService
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -23,6 +24,12 @@ import com.group1.notamonotako.activities.GradientText
 import com.group1.notamonotako.activities.extra_activities.NotificationActivity
 import com.group1.notamonotako.activities.extra_activities.SendNotesActivity
 import com.group1.notamonotako.activities.extra_activities.SettingsActivity
+import com.group1.notamonotako.adapter.MyNotesOfflineAdapter
+import com.group1.notamonotako.network.NetworkManager
+import com.group1.notamonotako.roomdb.Notes
+import com.group1.notamonotako.roomdb.NotesDao
+import com.group1.notamonotako.roomdb.NotesDatabase
+import com.group1.notamonotako.roomdb.database_manager.NotesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -32,6 +39,7 @@ import java.io.IOException
 class  MyNotes : Fragment() {
     lateinit var btnSettings : ImageButton
     lateinit var myNotesAdapter: MyNotesAdapter
+    lateinit var myNotesOfflineAdapter: MyNotesOfflineAdapter
     lateinit var layoutManager: LinearLayoutManager
     lateinit var rv_mynotes: RecyclerView
     private lateinit var progressBar : ProgressBar
@@ -41,6 +49,8 @@ class  MyNotes : Fragment() {
     private lateinit var tvNoInternet : TextView
     private lateinit var swiperefresh : SwipeRefreshLayout
     private lateinit var btnSendNotes : ImageButton
+    private lateinit var notesRepository: NotesRepository
+    private lateinit var notesDao: NotesDao
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +58,6 @@ class  MyNotes : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_my_notes, container, false)
-
 
         progressBar = view.findViewById(R.id.progressBar)
         rv_mynotes = view.findViewById(R.id.rv_mynotes)
@@ -61,7 +70,10 @@ class  MyNotes : Fragment() {
         tvNoInternet = view.findViewById(R.id.tvNoInternet)
         btnSendNotes = view.findViewById(R.id.btnSendNotes)
         val soundManager = SoundManager(requireContext()) // Initialize SoundManager
-
+        val networkManager = NetworkManager
+        // Initialize notesDao and notesRepository here
+        notesDao = NotesDatabase.getInstance(requireContext()).dao
+        notesRepository = NotesRepository(notesDao)
 
         progressBar.visibility = View.INVISIBLE
         GradientText.setGradientText(tvMyNotes, requireContext())
@@ -77,24 +89,35 @@ class  MyNotes : Fragment() {
             soundManager.playSoundEffect()
             val intent = Intent(requireContext(), SettingsActivity::class.java)
             startActivity(intent)
-
-
         }
+
         btnSendNotes.setOnClickListener {
             soundManager.playSoundEffect()
-            val intent = Intent(requireContext(), SendNotesActivity::class.java)
-            startActivity(intent)
-            Log.d("SendNotes", "SendNotes button clicked")
+            if (networkManager.isNetworkAvailable(requireContext())){
+                val intent = Intent(requireContext(), SendNotesActivity::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(requireContext(), "This feature is not available in offline mode.", Toast.LENGTH_SHORT).show()
+            }
         }
         swiperefresh.setOnRefreshListener {
-            fetchNotes()
+            if (networkManager.isNetworkAvailable(requireContext())){
+                fetchNotes()
+            } else {
+                fetchOfflineNotes()
+            }
             swiperefresh.isRefreshing = false
         }
 
-
         rv_mynotes.setHasFixedSize(true)
         layoutManager = LinearLayoutManager(this.context)
-        fetchNotes()
+
+        if (networkManager.isNetworkAvailable(requireContext())){
+            fetchNotes()
+        } else {
+            Toast.makeText(requireContext(), "Offline mode", Toast.LENGTH_SHORT).show()
+            fetchOfflineNotes()
+        }
     return view
     }
 
@@ -149,9 +172,21 @@ class  MyNotes : Fragment() {
                 tvNoNotes.visibility = View.GONE
             }
         }
-
     }
-
+    private fun fetchOfflineNotes() {
+        lifecycleScope.launch {
+            try {
+                val notesList = notesRepository.fetchOfflineNotes()
+                myNotesOfflineAdapter = MyNotesOfflineAdapter(requireContext(), notesList)
+                rv_mynotes.adapter = myNotesOfflineAdapter
+                rv_mynotes.visibility = if (notesList.isEmpty()) View.GONE else View.VISIBLE
+                tvNoNotes.visibility = if (notesList.isEmpty()) View.VISIBLE else View.GONE
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.d("Offline", "Error: $e")
+            }
+        }
+    }
 }
 
 
