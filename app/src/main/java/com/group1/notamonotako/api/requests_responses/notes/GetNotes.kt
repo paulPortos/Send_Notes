@@ -8,7 +8,8 @@ data class Note(
     val title: String,
     val contents: String,
     val updated_at : String,
-    val public: Boolean,
+    @SerializedName("is_public")
+    val isPublic: Boolean,
     @SerializedName("to_public")
     val toPublic: Boolean
 )
@@ -18,7 +19,8 @@ data class UpdateNotes(
     val contents: String,
     @SerializedName("to_public")
     val toPublic: Boolean,
-    val public: Boolean
+    @SerializedName("is_public")
+    val isPublic: Boolean,
 )
 data class UpdateToPublicNotes(
     val title: String,
@@ -31,7 +33,8 @@ data class PostnotesRequest(
 
     val title: String,
     val contents: String,
-    val public: Boolean,
+    @SerializedName("is_public")
+    val isPublic: Boolean,
     val to_public: Boolean
 )
 

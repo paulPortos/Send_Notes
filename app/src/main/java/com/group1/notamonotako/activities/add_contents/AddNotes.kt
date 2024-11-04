@@ -96,7 +96,12 @@ class AddNotes : AppCompatActivity() {
                 val notesData = Notes(title = title, contents = contents, toPublic = false, isPublic = false)
                 val upsert = notesDao.UpsertNotes(notesData)
                 Log.e("Upsert Notes", "Upsert = $upsert")
-                Toast.makeText(this@AddNotes, "Uploaded offline!", Toast.LENGTH_SHORT).show()
+
+                Toast.makeText(this@AddNotes, "Note created successfully!", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@AddNotes, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
             } catch (e: Exception){
                 Log.e("Upsert Notes", "Error upserting note: $e")
                 Toast.makeText(this@AddNotes, "Failed Upload.", Toast.LENGTH_SHORT).show()
@@ -109,7 +114,7 @@ class AddNotes : AppCompatActivity() {
     private fun addNote(title: String, contents: String) {
         lifecycleScope.launch {
             val apiService = RetrofitInstance.create(ApiService::class.java)
-            val postNotes = PostnotesRequest(title = title, contents = contents, public = false, to_public = false)
+            val postNotes = PostnotesRequest(title = title, contents = contents, isPublic = false, to_public = false)
 
             try {
                 val response = apiService.createNote(postNotes)

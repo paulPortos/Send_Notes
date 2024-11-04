@@ -39,7 +39,7 @@ class MyNotesAdapter(val context: Context, val notelist: List<Note>) : RecyclerV
             soundManager.playSoundEffect()
             val intent = Intent(it.context, ViewMynotes::class.java)
 
-            intent.putExtra("public", item.public)
+            intent.putExtra("public", item.isPublic)
             intent.putExtra("title", item.title)
             intent.putExtra("contents", item.contents)
             intent.putExtra("date", item.updated_at)
@@ -48,9 +48,9 @@ class MyNotesAdapter(val context: Context, val notelist: List<Note>) : RecyclerV
             it.context.startActivity(intent)
         }
 
-        if (item.public == true && item.toPublic == false) {
+        if (item.isPublic == true && item.toPublic == false) {
             holder.public.visibility = View.VISIBLE
-        } else if(item.toPublic == true && item.public == false) {
+        } else if(item.toPublic == true && item.isPublic == false) {
             holder.pending.visibility = View.VISIBLE
         } else{
             holder.pending.visibility = View.GONE

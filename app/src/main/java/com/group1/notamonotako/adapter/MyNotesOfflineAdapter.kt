@@ -29,7 +29,7 @@ class MyNotesOfflineAdapter (val context: Context, private val noteList: List<No
     override fun onBindViewHolder(holder: NotesViewHolder, position: Int) {
         val item = noteList[position]
         holder.title.text = item.title
-        holder.contents.text = item.title
+        holder.contents.text = item.contents
         val soundManager = SoundManager(context)
         holder.notes.setOnClickListener{
             soundManager.playSoundEffect()

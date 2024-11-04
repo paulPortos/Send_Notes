@@ -191,16 +191,11 @@ class ViewMynotes : AppCompatActivity() {
 
         btnShare.setOnClickListener {
             soundManager.playSoundEffect()
-
-            val titleString = etTitle.text.toString()
-            val creatorsUsername = getUsername().toString()
             val creatorsEmail = getEmail().toString()
-            val contentsString = Content.text.toString()
-            val publicDefaultValue = false
             if (publicize){
                 Toast.makeText(this, "Note already public.", Toast.LENGTH_SHORT).show()
             } else {
-                shareNote(noteId, titleString, creatorsUsername, creatorsEmail, contentsString, publicDefaultValue, publicize)
+                shareNote(noteId, creatorsEmail, publicize)
             }
             flShare.visibility = View.INVISIBLE
             viewBlur.visibility = View.INVISIBLE
@@ -246,13 +241,12 @@ class ViewMynotes : AppCompatActivity() {
 
             val titleString = etTitle.text.toString()
             val contentsString = Content.text.toString()
-            val creatorsUsername = getUsername().toString()
             val creatorsEmail = getEmail().toString()
             if (networkManager.isNetworkAvailable(this)) {
                 if (noteId != -1) {
                     if (recentTitle != titleString || recentContents != contentsString) {
                         if (publicize){
-                            shareNote(noteId, titleString, creatorsUsername, creatorsEmail, contentsString, false, publicize)
+                            shareNote(noteId, creatorsEmail, publicize)
                             updateNote(noteId, publicize, toPublic)
                         } else {
                             updateNote(noteId, publicize, toPublic)
@@ -264,7 +258,7 @@ class ViewMynotes : AppCompatActivity() {
                     Toast.makeText(this, "Note ID is missing.", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                updateOfflineNote(noteId, titleString, creatorsUsername)
+                updateOfflineNote(noteId, titleString, contentsString)
             }
         }
 
@@ -300,14 +294,13 @@ class ViewMynotes : AppCompatActivity() {
             }
 
         }
-
     }
 
-    private fun shareNote(notesId: Int,title: String, creatorUsername: String, creatorEmail: String, contents: String, public: Boolean, publicize: Boolean){
+    private fun shareNote(notesId: Int, creatorEmail: String, publicize: Boolean){
         lifecycleScope.launch {
             try {
                 val apiService = RetrofitInstance.create(ApiService::class.java)
-                val postToAdmin = PostToAdmin(notesId, title, creatorUsername, creatorEmail, contents, public)
+                val postToAdmin = PostToAdmin(notesId)
                 val response = apiService.toAdmin(postToAdmin)
 
                 if (response.isSuccessful) {
@@ -381,7 +374,7 @@ class ViewMynotes : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val apiService = RetrofitInstance.create(ApiService::class.java)
-                val noteRequest = UpdateNotes(title = updatedTitle, contents = updatedContent, toPublic = true, public = false)
+                val noteRequest = UpdateNotes(title = updatedTitle, contents = updatedContent, toPublic = true, isPublic = false)
 
                 val response = withContext(Dispatchers.IO) {
                     apiService.updateNote("Bearer $token", noteId, noteRequest)  // Pass the updated note
