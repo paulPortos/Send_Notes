@@ -1,13 +1,19 @@
-# Send_Notes
+# 📝 Send_Notes
 
-Send notes is an app where it enables users to write personal notes, reviewers; where they can also choose to share it to others, and also create flashcards. The goal of Send Notes is to equip users to efficiently organize their thoughts, create comprehensive reviewers, develop flashcards to enhance learning retention and foster collaborative learning.
+**Send_Notes** is a powerful and user-friendly app designed to help users write personal notes, create detailed reviewers, and develop flashcards — all in one place. Users can also choose to share their content with others, promoting collaborative learning.
 
+The goal of **Send_Notes** is to help users:
+- Efficiently organize their thoughts
+- Build comprehensive review materials
+- Boost memory retention through flashcards
+- Collaborate and learn with others
 
-| Version        | Changes                               | Release Date |
-|----------------|---------------------------------------|--------------|
-| Version 1.0    | Minor bug fixes and toast changes     | 11/3/24      |
-| Version 2.0    | ?                                     | ?            | 
-| Version 3.0    | ?                                     | ?            |
+---
 
+## 📦 Version History
 
-     Send notes is an app where it enables users to write personal notes, reviewers; where they can also choose to share it to others, and also create flashcards. The goal of Send Notes is to equip users to efficiently organize their thoughts, create comprehensive reviewers, develop flashcards to enhance learning retention and foster collaborative learning.
+| Version   | Changes                          | Release Date |
+|-----------|----------------------------------|--------------|
+| 1.0       | Minor bug fixes and toast UI improvements | 11/03/2024   |
+| 2.0       | _Coming soon_                    | _TBA_        |
+| 3.0       | _Coming soon_                    | _TBA_        |
